@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
+    "build:dev": "vite build --mode development",
     "start": "next start",
     "lint": "eslint",
     "init-data": "tsx scripts/init-data.ts",
