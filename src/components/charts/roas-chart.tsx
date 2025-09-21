@@ -13,28 +13,7 @@ interface ROASChartProps {
   targetROAS?: number
 }
 
-const defaultData: ChartDataPoint[] = [
-  { date: '2024-11-01', roas: 2.8, spend: 1200, revenue: 3360, target: 3.0 },
-  { date: '2024-11-02', roas: 3.1, spend: 1350, revenue: 4185, target: 3.0 },
-  { date: '2024-11-03', roas: 2.9, spend: 1100, revenue: 3190, target: 3.0 },
-  { date: '2024-11-04', roas: 3.4, spend: 1450, revenue: 4930, target: 3.0 },
-  { date: '2024-11-05', roas: 3.2, spend: 1300, revenue: 4160, target: 3.0 },
-  { date: '2024-11-06', roas: 3.6, spend: 1600, revenue: 5760, target: 3.0 },
-  { date: '2024-11-07', roas: 3.3, spend: 1400, revenue: 4620, target: 3.0 },
-  { date: '2024-11-08', roas: 2.7, spend: 1250, revenue: 3375, target: 3.0 },
-  { date: '2024-11-09', roas: 3.8, spend: 1550, revenue: 5890, target: 3.0 },
-  { date: '2024-11-10', roas: 3.5, spend: 1480, revenue: 5180, target: 3.0 },
-  { date: '2024-11-11', roas: 3.7, spend: 1620, revenue: 5994, target: 3.0 },
-  { date: '2024-11-12', roas: 3.9, spend: 1700, revenue: 6630, target: 3.0 },
-  { date: '2024-11-13', roas: 3.4, spend: 1450, revenue: 4930, target: 3.0 },
-  { date: '2024-11-14', roas: 4.1, spend: 1800, revenue: 7380, target: 3.0 },
-  { date: '2024-11-15', roas: 3.8, spend: 1650, revenue: 6270, target: 3.0 },
-  { date: '2024-11-16', roas: 3.6, spend: 1500, revenue: 5400, target: 3.0 },
-  { date: '2024-11-17', roas: 4.0, spend: 1750, revenue: 7000, target: 3.0 },
-  { date: '2024-11-18', roas: 3.7, spend: 1600, revenue: 5920, target: 3.0 },
-  { date: '2024-11-19', roas: 3.9, spend: 1720, revenue: 6708, target: 3.0 },
-  { date: '2024-11-20', roas: 4.2, spend: 1850, revenue: 7770, target: 3.0 }
-]
+// No default data - all data comes from API
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr)
@@ -83,7 +62,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 }
 
 const ROASChart: React.FC<ROASChartProps> = ({
-  data = defaultData,
+  data = [],
   title = "ROAS Performance Trend",
   showTarget = true,
   targetROAS = 3.0
@@ -93,8 +72,27 @@ const ROASChart: React.FC<ROASChartProps> = ({
   const roasChange = ((currentROAS - previousROAS) / previousROAS * 100)
   const isIncreasing = roasChange > 0
 
-  const avgROAS = data.reduce((sum, item) => sum + item.roas, 0) / data.length
+  const avgROAS = data.length > 0 ? data.reduce((sum, item) => sum + item.roas, 0) / data.length : 0
   const isAboveTarget = avgROAS > targetROAS
+
+  if (data.length === 0) {
+    return (
+      <Card className="col-span-1 lg:col-span-2">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold text-gray-900">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="h-80 flex items-center justify-center bg-gray-50 rounded-lg">
+            <div className="text-center">
+              <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No Data Available</h3>
+              <p className="text-gray-600">ROAS performance data will appear here once campaigns are synced</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card className="col-span-1 lg:col-span-2">

@@ -78,6 +78,7 @@ model CampaignInsight {
   audiences       AudiencePerformance[]
 
   @@unique([campaignId, date])
+  @@unique([campaignId])
   @@map("campaign_insights")
 }
 

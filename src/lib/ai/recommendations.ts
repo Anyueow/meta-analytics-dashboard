@@ -1,7 +1,7 @@
 import { CampaignData, AIRecommendation } from '@/types'
 
 export interface AIAnalysisConfig {
-  openaiApiKey: string
+  zaiApiKey: string
   model?: string
   temperature?: number
 }
@@ -11,7 +11,7 @@ export class AIRecommendationEngine {
 
   constructor(config: AIAnalysisConfig) {
     this.config = {
-      model: 'gpt-4',
+      model: 'glm-4',
       temperature: 0.3,
       ...config
     }
@@ -30,10 +30,10 @@ export class AIRecommendationEngine {
   private async analyzeCampaignPerformance(campaignData: CampaignData[]) {
     const prompt = this.buildAnalysisPrompt(campaignData)
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.zhipuai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${this.config.openaiApiKey}`,
+        'Authorization': `Bearer ${this.config.zaiApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -64,7 +64,7 @@ Format as structured JSON with confidence scores.`
     })
 
     if (!response.ok) {
-      throw new Error(`OpenAI API error: ${response.statusText}`)
+      throw new Error(`Z AI API error: ${response.statusText}`)
     }
 
     const result = await response.json()
@@ -194,8 +194,8 @@ let aiEngine: AIRecommendationEngine | null = null
 export function getAIRecommendationEngine(): AIRecommendationEngine {
   if (!aiEngine) {
     aiEngine = new AIRecommendationEngine({
-      openaiApiKey: process.env.OPENAI_API_KEY || '',
-      model: 'gpt-4',
+      zaiApiKey: process.env.ZAI_API_KEY || '',
+      model: 'glm-4',
       temperature: 0.3
     })
   }

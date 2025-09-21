@@ -56,7 +56,7 @@ A comprehensive Meta Ads campaign monitoring dashboard with AI-powered insights 
    DATABASE_URL=postgresql://user:pass@host:port/db
 
    # AI Configuration
-   OPENAI_API_KEY=your_openai_key
+   ZAI_API_KEY=your_zai_api_key
 
    # Authentication
    NEXTAUTH_SECRET=your_auth_secret

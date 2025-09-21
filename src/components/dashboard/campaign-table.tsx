@@ -12,108 +12,7 @@ interface CampaignTableProps {
 type SortKey = keyof CampaignData
 type SortDirection = 'asc' | 'desc'
 
-const defaultCampaigns: CampaignData[] = [
-  {
-    campaign_id: '120210158071660207',
-    campaign_name: 'Holiday Sale - Lookalike 1%',
-    date_start: '2024-11-01',
-    spend: 1250.45,
-    impressions: 45000,
-    clicks: 1200,
-    conversions: 48,
-    conversion_value: 3840.00,
-    ctr: 2.67,
-    cpc: 1.04,
-    cpm: 27.79,
-    roas: 3.07,
-    cpa: 26.05,
-    cost_per_purchase: 25.30,
-    frequency: 2.1,
-    reach: 21428,
-    relevance_score: 7,
-    quality_ranking: 'above_average'
-  },
-  {
-    campaign_id: '120210158071660208',
-    campaign_name: 'Black Friday - Interest Targeting',
-    date_start: '2024-11-01',
-    spend: 2150.30,
-    impressions: 78000,
-    clicks: 1950,
-    conversions: 85,
-    conversion_value: 6800.00,
-    ctr: 2.50,
-    cpc: 1.10,
-    cpm: 27.57,
-    roas: 3.16,
-    cpa: 25.30,
-    cost_per_purchase: 24.15,
-    frequency: 2.8,
-    reach: 27857,
-    relevance_score: 8,
-    quality_ranking: 'above_average'
-  },
-  {
-    campaign_id: '120210158071660209',
-    campaign_name: 'Winter Collection - Retargeting',
-    date_start: '2024-11-01',
-    spend: 890.75,
-    impressions: 25000,
-    clicks: 750,
-    conversions: 42,
-    conversion_value: 4200.00,
-    ctr: 3.00,
-    cpc: 1.19,
-    cpm: 35.63,
-    roas: 4.71,
-    cpa: 21.21,
-    cost_per_purchase: 19.95,
-    frequency: 1.8,
-    reach: 13888,
-    relevance_score: 9,
-    quality_ranking: 'above_average'
-  },
-  {
-    campaign_id: '120210158071660210',
-    campaign_name: 'Q4 Promotions - Broad Targeting',
-    date_start: '2024-11-01',
-    spend: 1680.90,
-    impressions: 65000,
-    clicks: 1300,
-    conversions: 38,
-    conversion_value: 2660.00,
-    ctr: 2.00,
-    cpc: 1.29,
-    cpm: 25.86,
-    roas: 1.58,
-    cpa: 44.23,
-    cost_per_purchase: 42.10,
-    frequency: 3.2,
-    reach: 20312,
-    relevance_score: 5,
-    quality_ranking: 'average'
-  },
-  {
-    campaign_id: '120210158071660211',
-    campaign_name: 'Premium Products - Custom Audience',
-    date_start: '2024-11-01',
-    spend: 3250.80,
-    impressions: 95000,
-    clicks: 2850,
-    conversions: 125,
-    conversion_value: 15000.00,
-    ctr: 3.00,
-    cpc: 1.14,
-    cpm: 34.22,
-    roas: 4.62,
-    cpa: 26.01,
-    cost_per_purchase: 22.85,
-    frequency: 2.3,
-    reach: 41304,
-    relevance_score: 8,
-    quality_ranking: 'above_average'
-  }
-]
+// No default campaigns - all data comes from API
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('en-US', {
@@ -167,7 +66,7 @@ const getQualityBadgeColor = (ranking: string) => {
   }
 }
 
-const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns = defaultCampaigns }) => {
+const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns = [] }) => {
   const [sortKey, setSortKey] = useState<SortKey>('spend')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
   const [filter, setFilter] = useState('')
@@ -216,7 +115,25 @@ const CampaignTable: React.FC<CampaignTableProps> = ({ campaigns = defaultCampai
   const totalSpend = campaigns.reduce((sum, campaign) => sum + campaign.spend, 0)
   const totalRevenue = campaigns.reduce((sum, campaign) => sum + campaign.conversion_value, 0)
   const totalConversions = campaigns.reduce((sum, campaign) => sum + campaign.conversions, 0)
-  const avgROAS = totalRevenue / totalSpend
+  const avgROAS = totalSpend > 0 ? totalRevenue / totalSpend : 0
+
+  if (campaigns.length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold text-gray-900">Campaign Performance</CardTitle>
+          <p className="text-sm text-gray-600 mt-1">No campaigns found</p>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-12">
+            <Target className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No Campaign Data</h3>
+            <p className="text-gray-600">Campaign performance data will appear here once campaigns are synced from Meta API</p>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card>

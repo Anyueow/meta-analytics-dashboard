@@ -24,83 +24,7 @@ interface AIInsightsProps {
   recommendations?: AIRecommendation[]
 }
 
-const defaultRecommendations: AIRecommendation[] = [
-  {
-    id: '1',
-    date: '2024-11-20',
-    campaign_id: '120210158071660207',
-    type: 'budget_increase',
-    title: 'Increase Budget - High Performing Campaign',
-    description: 'Holiday Sale campaign ROAS (3.07) is 23% above target (2.5). Recommend increasing daily budget by 50% to capture more high-intent holiday traffic before the season ends.',
-    confidence_score: 0.85,
-    expected_impact: '+$960 revenue, +25 conversions',
-    priority: 'high',
-    action_required: 'Increase daily budget from $200 to $300',
-    implemented: false,
-    created_at: new Date('2024-11-20T08:00:00Z'),
-    updated_at: new Date('2024-11-20T08:00:00Z')
-  },
-  {
-    id: '2',
-    date: '2024-11-20',
-    campaign_id: '120210158071660210',
-    type: 'creative_refresh',
-    title: 'Creative Fatigue Detected',
-    description: 'Q4 Promotions campaign showing declining CTR (2.0% → 1.6%) over 7 days with frequency at 3.2. Creative assets need refreshing to combat fatigue.',
-    confidence_score: 0.92,
-    expected_impact: '+0.8% CTR, -$8 CPA',
-    priority: 'high',
-    action_required: 'Upload 3-5 new creative assets and pause current underperforming ads',
-    implemented: false,
-    created_at: new Date('2024-11-20T09:15:00Z'),
-    updated_at: new Date('2024-11-20T09:15:00Z')
-  },
-  {
-    id: '3',
-    date: '2024-11-20',
-    campaign_id: '120210158071660208',
-    type: 'audience_expansion',
-    title: 'Audience Expansion Opportunity',
-    description: 'Black Friday campaign performing well with 1% Lookalike. Test 2% Lookalike audience based on recent high-value purchasers (AOV $80+).',
-    confidence_score: 0.78,
-    expected_impact: '+40% reach, +15% conversions',
-    priority: 'medium',
-    action_required: 'Create new ad set with 2% Lookalike audience, allocate 30% of budget',
-    implemented: false,
-    created_at: new Date('2024-11-20T10:30:00Z'),
-    updated_at: new Date('2024-11-20T10:30:00Z')
-  },
-  {
-    id: '4',
-    date: '2024-11-19',
-    campaign_id: '120210158071660210',
-    type: 'pause_campaign',
-    title: 'Poor Performance Alert',
-    description: 'Q4 Promotions campaign ROAS (1.58) is 37% below target. High CPA ($44.23) suggests poor audience-offer fit. Consider pausing until optimization.',
-    confidence_score: 0.89,
-    expected_impact: 'Save $300/day, reallocate to profitable campaigns',
-    priority: 'critical',
-    action_required: 'Pause campaign immediately and analyze audience segments',
-    implemented: true,
-    created_at: new Date('2024-11-19T14:20:00Z'),
-    updated_at: new Date('2024-11-19T16:45:00Z')
-  },
-  {
-    id: '5',
-    date: '2024-11-19',
-    campaign_id: '120210158071660211',
-    type: 'bidding_adjustment',
-    title: 'Bidding Strategy Optimization',
-    description: 'Premium Products campaign eligible for Target ROAS bidding. Historical performance (4.62 ROAS) suggests stable optimization.',
-    confidence_score: 0.73,
-    expected_impact: '+12% efficiency, -5% CPA',
-    priority: 'low',
-    action_required: 'Switch from Lowest Cost to Target ROAS bidding at 4.0',
-    implemented: false,
-    created_at: new Date('2024-11-19T11:10:00Z'),
-    updated_at: new Date('2024-11-19T11:10:00Z')
-  }
-]
+// No default recommendations - all data comes from API
 
 const getRecommendationIcon = (type: string) => {
   switch (type) {
@@ -151,7 +75,7 @@ const formatTimeAgo = (date: Date) => {
   return `${diffInDays}d ago`
 }
 
-const AIInsights: React.FC<AIInsightsProps> = ({ recommendations = defaultRecommendations }) => {
+const AIInsights: React.FC<AIInsightsProps> = ({ recommendations = [] }) => {
   const [selectedTab, setSelectedTab] = useState<'all' | 'pending' | 'implemented'>('all')
   const [isRefreshing, setIsRefreshing] = useState(false)
 

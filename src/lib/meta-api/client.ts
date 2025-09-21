@@ -30,6 +30,7 @@ export class MetaApiClient {
 
   private async makeRequest<T>(endpoint: string, params: Record<string, any> = {}): Promise<T> {
     const url = new URL(`${this.baseUrl}${endpoint}`)
+    console.log(`🔗 Making Meta API request to: ${endpoint}`)
 
     // Add access token to all requests
     params.access_token = this.config.accessToken
@@ -47,7 +48,10 @@ export class MetaApiClient {
       }
     })
 
+    console.log(`📋 Request parameters:`, Object.keys(params).join(', '))
+
     try {
+      console.log(`🚀 Sending request to Meta API...`)
       const response = await fetch(url.toString(), {
         method: 'GET',
         headers: {
@@ -55,14 +59,24 @@ export class MetaApiClient {
         },
       })
 
+      console.log(`📊 Response status: ${response.status} ${response.statusText}`)
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
+        console.error(`❌ Meta API Error: ${response.status} - ${errorData.error?.message || response.statusText}`)
         throw new Error(`Meta API Error: ${response.status} - ${errorData.error?.message || response.statusText}`)
       }
 
-      return await response.json()
+      const data = await response.json()
+      console.log(`✅ Meta API request successful. Data received:`, {
+        dataLength: Array.isArray(data.data) ? data.data.length : 'not array',
+        hasPaging: !!data.paging,
+        keys: Object.keys(data)
+      })
+      
+      return data
     } catch (error) {
-      console.error('Meta API request failed:', error)
+      console.error('❌ Meta API request failed:', error)
       throw error
     }
   }
@@ -127,6 +141,9 @@ export class MetaApiClient {
 
   // Real-time data sync methods
   async syncCampaignData(accountId: string, dateRange?: { since: string; until: string }) {
+    console.log(`🔄 Starting campaign data sync for account: ${accountId}`)
+    console.log(`📅 Date range:`, dateRange || 'last 30 days')
+    
     const insights = await this.getCampaignInsights(accountId, {
       fields: [
         'campaign_id',
@@ -151,11 +168,18 @@ export class MetaApiClient {
       limit: 100
     })
 
-    return this.transformInsightsData(insights.data)
+    console.log(`📊 Raw insights received:`, insights.data?.length || 0, 'campaigns')
+    
+    const transformedData = this.transformInsightsData(insights.data)
+    console.log(`✅ Transformed data:`, transformedData.length, 'campaigns ready for storage')
+    
+    return transformedData
   }
 
   private transformInsightsData(rawData: any[]): CampaignData[] {
-    return rawData.map(item => {
+    console.log(`🔄 Transforming ${rawData.length} raw campaign insights...`)
+    
+    return rawData.map((item, index) => {
       // Extract conversions and conversion value from actions array
       const conversions = this.extractActionValue(item.actions, 'purchase') || 0
       const conversionValue = this.extractActionValue(item.action_values, 'purchase') || 0
@@ -165,7 +189,7 @@ export class MetaApiClient {
       const cpa = conversions > 0 ? item.spend / conversions : 0
       const costPerPurchase = conversions > 0 ? item.spend / conversions : 0
 
-      return {
+      const transformed = {
         campaign_id: item.campaign_id,
         campaign_name: item.campaign_name,
         date_start: item.date_start,
@@ -183,6 +207,17 @@ export class MetaApiClient {
         frequency: parseFloat(item.frequency || 0),
         reach: parseInt(item.reach || 0)
       }
+
+      if (index < 3) { // Log first 3 campaigns for debugging
+        console.log(`📋 Campaign ${index + 1}:`, {
+          name: transformed.campaign_name,
+          spend: transformed.spend,
+          roas: transformed.roas,
+          conversions: transformed.conversions
+        })
+      }
+
+      return transformed
     })
   }
 
