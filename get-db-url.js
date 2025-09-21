@@ -1,0 +1,24 @@
+const fs = require('fs');
+
+console.log('🔍 Supabase Database Setup Helper');
+console.log('');
+console.log('To get your DATABASE_URL, follow these steps:');
+console.log('');
+console.log('1. Go to: https://supabase.com/dashboard/project/entyheocxwblqyhefshu');
+console.log('2. Click on "Settings" in the left sidebar');
+console.log('3. Click on "Database"');
+console.log('4. Scroll down to "Connection string" section');
+console.log('5. Copy the "Connection pooling" URL');
+console.log('');
+console.log('The URL should look like:');
+console.log('postgresql://postgres:[YOUR-PASSWORD]@db.entyheocxwblqyhefshu.supabase.co:5432/postgres');
+console.log('');
+console.log('Once you have the URL, update your .env file by replacing:');
+console.log('DATABASE_URL=postgresql://postgres:[password]@db.entyheocxwblqyhefshu.supabase.co:5432/postgres');
+console.log('');
+console.log('With your actual connection string.');
+console.log('');
+console.log('Alternatively, if you know your database password, you can run:');
+console.log('node -e "console.log(\\`DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.entyheocxwblqyhefshu.supabase.co:5432/postgres\\`)"');
+console.log('');
+console.log('Then copy the output and replace the DATABASE_URL line in your .env file.');

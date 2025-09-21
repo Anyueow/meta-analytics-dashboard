@@ -89,39 +89,39 @@ const ClickableKPICards: React.FC<ClickableKPICardsProps> = ({ kpis = [] }) => {
           href={`/calculations#${getKPISlug(kpi.label)}`}
           className="group"
         >
-          <Card className="hover:shadow-lg transition-all duration-200 cursor-pointer group-hover:scale-105 border-2 border-transparent group-hover:border-blue-200">
-            <CardContent className="p-4 lg:p-6">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center space-x-2">
+          <Card className="hover:shadow-lg transition-all duration-200 cursor-pointer group-hover:scale-[1.02] border-2 border-transparent group-hover:border-blue-200 h-full">
+            <CardContent className="p-6 h-full flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-3">
                   {kpi.icon && (
-                    <div className="p-2 bg-gray-100 rounded-lg group-hover:bg-blue-100 transition-colors">
-                      {getIcon(kpi.icon, "h-4 w-4 text-gray-600 group-hover:text-blue-600")}
+                    <div className="p-2 bg-gray-100 rounded-lg group-hover:bg-blue-100 transition-colors duration-200 flex-shrink-0">
+                      {getIcon(kpi.icon, "h-5 w-5 text-gray-600 group-hover:text-blue-600")}
                     </div>
                   )}
-                  <span className="text-sm font-medium text-gray-600 group-hover:text-gray-900">
+                  <span className="text-sm font-medium text-gray-600 group-hover:text-gray-900 truncate">
                     {kpi.label}
                   </span>
                 </div>
-                <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors duration-200 flex-shrink-0" />
               </div>
 
-              <div className="space-y-2">
-                <div className="text-2xl lg:text-3xl font-bold text-gray-900">
+              <div className="space-y-3 flex-1">
+                <div className="text-2xl lg:text-3xl font-bold text-gray-900 truncate">
                   {formatValue(kpi.value, kpi.format)}
                 </div>
 
-                <div className={`flex items-center space-x-1 text-sm ${getChangeColor(kpi.changeType)}`}>
+                <div className={`flex items-center space-x-2 text-sm ${getChangeColor(kpi.changeType)}`}>
                   {getChangeIcon(kpi.changeType)}
-                  <span>
+                  <span className="font-medium">
                     {kpi.change > 0 ? '+' : ''}{kpi.change}%
                   </span>
-                  <span className="text-gray-400">vs last month</span>
+                  <span className="text-gray-400 text-xs">vs last month</span>
                 </div>
               </div>
 
               {/* Clickable indicator */}
-              <div className="mt-3 pt-3 border-t border-gray-100">
-                <div className="flex items-center text-xs text-gray-500 group-hover:text-blue-600">
+              <div className="mt-4 pt-3 border-t border-gray-100">
+                <div className="flex items-center text-xs text-gray-500 group-hover:text-blue-600 transition-colors duration-200">
                   <span>Click to see calculation</span>
                   <ChevronRight className="h-3 w-3 ml-1" />
                 </div>

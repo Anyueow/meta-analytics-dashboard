@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import AIInsights from '@/components/dashboard/ai-insights'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import { dataService } from '@/lib/services/data-service'
 import { AIRecommendation } from '@/types'
 import {
@@ -127,6 +128,15 @@ const InsightsPage = () => {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-6">
+            {/* Breadcrumb Navigation */}
+            <div className="mb-4">
+              <Breadcrumb 
+                items={[{ label: 'AI Insights', current: true }]}
+                backHref="/"
+                backLabel="Back to Dashboard"
+              />
+            </div>
+            
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-blue-100 rounded-lg">

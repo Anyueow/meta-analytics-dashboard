@@ -14,11 +14,15 @@ const EnvCheck: React.FC<EnvCheckProps> = ({ children }) => {
     hasAccountId: boolean
     hasDatabase: boolean
     hasZaiKey: boolean
+    hasSupabaseUrl: boolean
+    hasSupabaseKey: boolean
   }>({
     hasMetaToken: false,
     hasAccountId: false,
     hasDatabase: false,
-    hasZaiKey: false
+    hasZaiKey: false,
+    hasSupabaseUrl: false,
+    hasSupabaseKey: false
   })
 
   React.useEffect(() => {
@@ -27,7 +31,9 @@ const EnvCheck: React.FC<EnvCheckProps> = ({ children }) => {
       hasMetaToken: !!process.env.NEXT_PUBLIC_META_ACCESS_TOKEN,
       hasAccountId: !!process.env.NEXT_PUBLIC_META_ACCOUNT_ID,
       hasDatabase: !!process.env.NEXT_PUBLIC_DATABASE_URL,
-      hasZaiKey: !!process.env.NEXT_PUBLIC_ZAI_API_KEY
+      hasZaiKey: !!process.env.NEXT_PUBLIC_ZAI_API_KEY,
+      hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+      hasSupabaseKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     })
   }, [])
 
@@ -99,6 +105,30 @@ const EnvCheck: React.FC<EnvCheckProps> = ({ children }) => {
                 <p className="text-sm text-gray-500">ZAI_API_KEY</p>
               </div>
             </div>
+
+            <div className="flex items-center space-x-3">
+              {envStatus.hasSupabaseUrl ? (
+                <CheckCircle className="h-5 w-5 text-green-600" />
+              ) : (
+                <AlertTriangle className="h-5 w-5 text-red-600" />
+              )}
+              <div>
+                <p className="font-medium">Supabase URL</p>
+                <p className="text-sm text-gray-500">NEXT_PUBLIC_SUPABASE_URL</p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              {envStatus.hasSupabaseKey ? (
+                <CheckCircle className="h-5 w-5 text-green-600" />
+              ) : (
+                <AlertTriangle className="h-5 w-5 text-red-600" />
+              )}
+              <div>
+                <p className="font-medium">Supabase Key</p>
+                <p className="text-sm text-gray-500">NEXT_PUBLIC_SUPABASE_ANON_KEY</p>
+              </div>
+            </div>
           </div>
 
           <div className="bg-blue-50 p-4 rounded-lg">
@@ -116,7 +146,9 @@ const EnvCheck: React.FC<EnvCheckProps> = ({ children }) => {
             <pre className="text-xs text-gray-700 overflow-x-auto">
 {`META_ACCESS_TOKEN=your_meta_access_token
 META_ACCOUNT_ID=your_meta_account_id
-DATABASE_URL=postgresql://user:pass@host:port/db
+DATABASE_URL=postgresql://postgres:[password]@db.[project-ref].supabase.co:5432/postgres
+NEXT_PUBLIC_SUPABASE_URL=https://[project-ref].supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ZAI_API_KEY=your_zai_api_key`}
             </pre>
           </div>

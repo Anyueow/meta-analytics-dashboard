@@ -28,6 +28,7 @@ const Navbar = () => {
     { name: 'Dashboard', href: '/', icon: Home, current: pathname === '/' },
     { name: 'Campaigns', href: '/campaigns', icon: Target, current: pathname === '/campaigns' },
     { name: 'AI Insights', href: '/insights', icon: Brain, current: pathname === '/insights' },
+    { name: 'Calculations', href: '/calculations', icon: BarChart3, current: pathname === '/calculations' },
     { name: 'Settings', href: '/settings', icon: Settings, current: pathname === '/settings' },
   ]
 
@@ -73,9 +74,9 @@ const Navbar = () => {
           </div>
 
           {/* Right side - Search, Notifications, Profile */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             {/* Search */}
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Search className="h-4 w-4 text-gray-400" />
@@ -83,7 +84,7 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search campaigns..."
-                  className="block w-64 pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="block w-56 xl:w-64 pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 />
               </div>
             </div>
@@ -99,16 +100,16 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                className="flex items-center space-x-3 text-sm rounded-lg p-2 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex items-center space-x-2 lg:space-x-3 text-sm rounded-lg p-2 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
               >
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <User className="h-4 w-4 text-white" />
                 </div>
-                <div className="hidden md:block text-left">
-                  <p className="text-sm font-medium text-gray-900">Admin User</p>
-                  <p className="text-xs text-gray-500">admin@company.com</p>
+                <div className="hidden lg:block text-left min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">Admin User</p>
+                  <p className="text-xs text-gray-500 truncate">admin@company.com</p>
                 </div>
-                <ChevronDown className="hidden md:block h-4 w-4 text-gray-400" />
+                <ChevronDown className="hidden lg:block h-4 w-4 text-gray-400 flex-shrink-0" />
               </button>
 
               {/* Profile Dropdown Menu */}
@@ -156,10 +157,10 @@ const Navbar = () => {
             </div>
 
             {/* Mobile menu button */}
-            <div className="sm:hidden">
+            <div className="lg:hidden">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
               >
                 <span className="sr-only">Open main menu</span>
                 {isMobileMenuOpen ? (
@@ -175,7 +176,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="sm:hidden">
+        <div className="lg:hidden">
           <div className="pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
             {navigation.map((item) => {
               const Icon = item.icon
@@ -187,11 +188,11 @@ const Navbar = () => {
                     item.current
                       ? 'bg-blue-50 border-blue-500 text-blue-700'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                  } block pl-3 pr-4 py-2 border-l-4 text-base font-medium`}
+                  } block pl-3 pr-4 py-3 border-l-4 text-base font-medium transition-colors duration-200`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <div className="flex items-center">
-                    <Icon className="h-4 w-4 mr-3" />
+                    <Icon className="h-5 w-5 mr-3 flex-shrink-0" />
                     {item.name}
                   </div>
                 </Link>
@@ -209,7 +210,7 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search campaigns..."
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 />
               </div>
             </div>

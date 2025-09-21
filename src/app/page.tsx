@@ -182,66 +182,75 @@ export default function Home() {
         </div>
 
         {/* Quick Status Cards - Mobile First */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
           {/* Performance Alert */}
-          <Card className="border-l-4 border-l-orange-500">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-orange-100 rounded-lg">
-                  <AlertTriangle className="h-5 w-5 text-orange-600" />
+          <Card className="border-l-4 border-l-orange-500 hover:shadow-md transition-shadow duration-200 h-full">
+            <CardContent className="p-6 h-full flex flex-col">
+              <div className="flex items-start space-x-4 h-full">
+                <div className="p-3 bg-orange-100 rounded-lg flex-shrink-0">
+                  <AlertTriangle className="h-6 w-6 text-orange-600" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-900">Performance Alert</h3>
-                  <p className="text-sm text-gray-600">{alerts.length} campaigns need attention</p>
+                <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">Performance Alert</h3>
+                    <p className="text-sm text-gray-700 mb-3">{alerts.length} campaigns need attention</p>
+                  </div>
+                  <Link
+                    href="/campaigns"
+                    className="inline-flex items-center text-sm text-orange-700 hover:text-orange-800 font-medium transition-colors duration-200 mt-auto"
+                  >
+                    <span>View Details</span>
+                    <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
                 </div>
-                <Link
-                  href="/campaigns"
-                  className="text-orange-600 hover:text-orange-800"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
               </div>
             </CardContent>
           </Card>
 
           {/* AI Recommendations */}
-          <Card className="border-l-4 border-l-blue-500">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Brain className="h-5 w-5 text-blue-600" />
+          <Card className="border-l-4 border-l-blue-500 hover:shadow-md transition-shadow duration-200 h-full">
+            <CardContent className="p-6 h-full flex flex-col">
+              <div className="flex items-start space-x-4 h-full">
+                <div className="p-3 bg-blue-100 rounded-lg flex-shrink-0">
+                  <Brain className="h-6 w-6 text-blue-600" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-900">AI Insights</h3>
-                  <p className="text-sm text-gray-600">{aiRecommendations.length} optimization opportunities</p>
+                <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">AI Insights</h3>
+                    <p className="text-sm text-gray-700 mb-3">{aiRecommendations.length} optimization opportunities</p>
+                  </div>
+                  <Link
+                    href="/insights"
+                    className="inline-flex items-center text-sm text-blue-700 hover:text-blue-800 font-medium transition-colors duration-200 mt-auto"
+                  >
+                    <span>View Insights</span>
+                    <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
                 </div>
-                <Link
-                  href="/insights"
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
               </div>
             </CardContent>
           </Card>
 
           {/* Quick Stats */}
-          <Card className="border-l-4 border-l-green-500">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <Target className="h-5 w-5 text-green-600" />
+          <Card className="border-l-4 border-l-green-500 hover:shadow-md transition-shadow duration-200 md:col-span-2 lg:col-span-1 h-full">
+            <CardContent className="p-6 h-full flex flex-col">
+              <div className="flex items-start space-x-4 h-full">
+                <div className="p-3 bg-green-100 rounded-lg flex-shrink-0">
+                  <Target className="h-6 w-6 text-green-600" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-900">Active Campaigns</h3>
-                  <p className="text-sm text-gray-600">18 running, 6 paused</p>
+                <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-1">Active Campaigns</h3>
+                    <p className="text-sm text-gray-700 mb-3">18 running, 6 paused</p>
+                  </div>
+                  <Link
+                    href="/campaigns"
+                    className="inline-flex items-center text-sm text-green-700 hover:text-green-800 font-medium transition-colors duration-200 mt-auto"
+                  >
+                    <span>Manage Campaigns</span>
+                    <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
                 </div>
-                <Link
-                  href="/campaigns"
-                  className="text-green-600 hover:text-green-800"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
               </div>
             </CardContent>
           </Card>
@@ -273,47 +282,47 @@ export default function Home() {
         </div>
 
         {/* Recent Activity Summary - Mobile Friendly */}
-        <Card>
+        <Card className="hover:shadow-md transition-shadow duration-200">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <BarChart3 className="h-5 w-5 text-gray-600" />
+              <BarChart3 className="h-5 w-5 text-black" />
               <span>Recent Activity</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-sm font-medium">Holiday Campaign budget increased</span>
+              <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors duration-200">
+                <div className="flex items-center space-x-3 flex-1 min-w-0">
+                  <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
+                  <span className="text-sm font-medium text-gray-900 truncate">Holiday Campaign budget increased</span>
                 </div>
-                <span className="text-xs text-gray-500">5 min ago</span>
+                <span className="text-xs text-gray-600 flex-shrink-0 ml-2">5 min ago</span>
               </div>
 
-              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span className="text-sm font-medium">AI detected optimization opportunity</span>
+              <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors duration-200">
+                <div className="flex items-center space-x-3 flex-1 min-w-0">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
+                  <span className="text-sm font-medium text-gray-900 truncate">AI detected optimization opportunity</span>
                 </div>
-                <span className="text-xs text-gray-500">12 min ago</span>
+                <span className="text-xs text-gray-600 flex-shrink-0 ml-2">12 min ago</span>
               </div>
 
-              <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                  <span className="text-sm font-medium">Creative fatigue alert triggered</span>
+              <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors duration-200">
+                <div className="flex items-center space-x-3 flex-1 min-w-0">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full flex-shrink-0"></div>
+                  <span className="text-sm font-medium text-gray-900 truncate">Creative fatigue alert triggered</span>
                 </div>
-                <span className="text-xs text-gray-500">1 hour ago</span>
+                <span className="text-xs text-gray-600 flex-shrink-0 ml-2">1 hour ago</span>
               </div>
             </div>
 
-            <div className="mt-4 pt-4 border-t">
+            <div className="mt-6 pt-4 border-t border-gray-200">
               <Link
                 href="/campaigns"
-                className="flex items-center justify-center space-x-2 text-sm text-blue-600 hover:text-blue-800"
+                className="flex items-center justify-center space-x-2 text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"
               >
                 <span>View all campaigns</span>
-                <ArrowRight className="h-3 w-3" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </CardContent>

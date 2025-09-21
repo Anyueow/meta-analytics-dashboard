@@ -95,12 +95,12 @@ const ROASChart: React.FC<ROASChartProps> = ({
   }
 
   return (
-    <Card className="col-span-1 lg:col-span-2">
+    <Card className="hover:shadow-md transition-shadow duration-200">
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div className="min-w-0">
             <CardTitle className="text-lg font-semibold text-gray-900">{title}</CardTitle>
-            <div className="flex items-center mt-2 space-x-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mt-2 space-y-2 sm:space-y-0">
               <div className="flex items-center">
                 <span className="text-sm text-gray-600 mr-2">Current ROAS:</span>
                 <span className="text-lg font-bold text-blue-600">{currentROAS.toFixed(2)}</span>
@@ -120,9 +120,9 @@ const ROASChart: React.FC<ROASChartProps> = ({
               )}
             </div>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 flex-shrink-0">
             <Calendar className="h-4 w-4 text-gray-400" />
-            <select className="text-sm border border-gray-200 rounded px-2 py-1">
+            <select className="text-sm border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
               <option>Last 30 days</option>
               <option>Last 7 days</option>
               <option>Last 90 days</option>
@@ -177,19 +177,19 @@ const ROASChart: React.FC<ROASChartProps> = ({
         </div>
 
         {/* Performance Summary */}
-        <div className="mt-6 grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
-          <div className="text-center">
-            <div className="text-sm text-gray-600">Avg ROAS</div>
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+          <div className="text-center p-4 bg-gray-50 rounded-lg">
+            <div className="text-sm text-gray-700 font-medium mb-1">Avg ROAS</div>
             <div className="text-lg font-semibold text-gray-900">{avgROAS.toFixed(2)}</div>
           </div>
-          <div className="text-center">
-            <div className="text-sm text-gray-600">Best Day</div>
+          <div className="text-center p-4 bg-green-50 rounded-lg">
+            <div className="text-sm text-gray-700 font-medium mb-1">Best Day</div>
             <div className="text-lg font-semibold text-green-600">
               {Math.max(...data.map(d => d.roas)).toFixed(2)}
             </div>
           </div>
-          <div className="text-center">
-            <div className="text-sm text-gray-600">Worst Day</div>
+          <div className="text-center p-4 bg-red-50 rounded-lg">
+            <div className="text-sm text-gray-700 font-medium mb-1">Worst Day</div>
             <div className="text-lg font-semibold text-red-600">
               {Math.min(...data.map(d => d.roas)).toFixed(2)}
             </div>

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import CampaignTable from '@/components/dashboard/campaign-table'
+import Breadcrumb from '@/components/ui/breadcrumb'
 import { dataService } from '@/lib/services/data-service'
 import { CampaignData } from '@/types'
 import {
@@ -162,66 +163,77 @@ const CampaignsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-blue-100 rounded-lg">
-                  <Target className="h-8 w-8 text-blue-600" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-900">Campaign Management</h1>
-                  <p className="text-gray-600">Monitor and optimize your Meta advertising campaigns</p>
+              {/* Header */}
+              <div className="bg-white shadow-sm border-b">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <div className="py-6">
+                    {/* Breadcrumb Navigation */}
+                    <div className="mb-4">
+                      <Breadcrumb 
+                        items={[{ label: 'Campaigns', current: true }]}
+                        backHref="/"
+                        backLabel="Back to Dashboard"
+                      />
+                    </div>
+                    
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                      <div className="flex items-center space-x-4">
+                        <div className="p-3 bg-blue-100 rounded-lg flex-shrink-0">
+                          <Target className="h-8 w-8 text-blue-600" />
+                        </div>
+                        <div className="min-w-0">
+                          <h1 className="text-2xl font-bold text-gray-900">Campaign Management</h1>
+                          <p className="text-gray-600">Monitor and optimize your Meta advertising campaigns</p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <button className="flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                          <Plus className="h-4 w-4" />
+                          <span>Create Campaign</span>
+                        </button>
+
+                        <button className="flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                          <Download className="h-4 w-4" />
+                          <span className="hidden sm:inline">Export Data</span>
+                        </button>
+
+                        <button className="flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                          <RefreshCw className="h-4 w-4" />
+                          <span className="hidden sm:inline">Sync</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <div className="flex items-center space-x-3">
-                <button className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                  <Plus className="h-4 w-4" />
-                  <span>Create Campaign</span>
-                </button>
-
-                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                  <Download className="h-4 w-4" />
-                  <span>Export Data</span>
-                </button>
-
-                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                  <RefreshCw className="h-4 w-4" />
-                  <span>Sync</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Campaign Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
           {campaignStatsData.map((stat, index) => {
             const Icon = stat.icon
             return (
-              <Card key={index} className="hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1">{stat.title}</p>
-                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                      <div className="flex items-center mt-2">
+              <Card key={index} className="hover:shadow-md transition-shadow duration-200 h-full">
+                <CardContent className="p-6 h-full flex flex-col">
+                  <div className="flex items-start justify-between h-full">
+                    <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
+                      <div>
+                        <p className="text-sm font-medium text-gray-700 mb-1 truncate">{stat.title}</p>
+                        <p className="text-2xl font-bold text-gray-900 mb-3">{stat.value}</p>
+                      </div>
+                      <div className="flex items-center mt-auto">
                         {stat.changeType === 'increase' ? (
-                          <TrendingUp className="h-3 w-3 text-green-600 mr-1" />
+                          <TrendingUp className="h-3 w-3 text-green-600 mr-1 flex-shrink-0" />
                         ) : (
-                          <TrendingDown className="h-3 w-3 text-red-600 mr-1" />
+                          <TrendingDown className="h-3 w-3 text-red-600 mr-1 flex-shrink-0" />
                         )}
                         <span className={`text-sm ${stat.changeType === 'increase' ? 'text-green-600' : 'text-red-600'}`}>
                           {stat.change} from last period
                         </span>
                       </div>
                     </div>
-                    <div className={`p-3 rounded-lg bg-${stat.color}-100`}>
+                    <div className={`p-3 rounded-lg bg-${stat.color}-100 flex-shrink-0 ml-4`}>
                       <Icon className={`h-6 w-6 text-${stat.color}-600`} />
                     </div>
                   </div>
@@ -270,12 +282,12 @@ const CampaignsPage = () => {
         </Card>
 
         {/* Filters and Search */}
-        <Card className="mb-6">
+        <Card className="mb-6 hover:shadow-md transition-shadow duration-200">
           <CardContent className="p-6">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+            <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6">
+              <div className="flex flex-col lg:flex-row gap-4 flex-1">
                 {/* Search */}
-                <div className="relative">
+                <div className="relative flex-1 lg:max-w-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Search className="h-4 w-4 text-gray-400" />
                   </div>
@@ -284,56 +296,58 @@ const CampaignsPage = () => {
                     placeholder="Search campaigns..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-full sm:w-64 pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                   />
                 </div>
 
-                {/* Status Filter */}
-                <select
-                  value={selectedStatus}
-                  onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  {statusOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label} ({option.count})
-                    </option>
-                  ))}
-                </select>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  {/* Status Filter */}
+                  <select
+                    value={selectedStatus}
+                    onChange={(e) => setSelectedStatus(e.target.value)}
+                    className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 min-w-0"
+                  >
+                    {statusOptions.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label} ({option.count})
+                      </option>
+                    ))}
+                  </select>
 
-                {/* Objective Filter */}
-                <select
-                  value={selectedObjective}
-                  onChange={(e) => setSelectedObjective(e.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  {campaignObjectives.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label} ({option.count})
-                    </option>
-                  ))}
-                </select>
+                  {/* Objective Filter */}
+                  <select
+                    value={selectedObjective}
+                    onChange={(e) => setSelectedObjective(e.target.value)}
+                    className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 min-w-0"
+                  >
+                    {campaignObjectives.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label} ({option.count})
+                      </option>
+                    ))}
+                  </select>
 
-                {/* Date Range */}
-                <select
-                  value={selectedDateRange}
-                  onChange={(e) => setSelectedDateRange(e.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="7d">Last 7 days</option>
-                  <option value="30d">Last 30 days</option>
-                  <option value="90d">Last 90 days</option>
-                  <option value="custom">Custom Range</option>
-                </select>
+                  {/* Date Range */}
+                  <select
+                    value={selectedDateRange}
+                    onChange={(e) => setSelectedDateRange(e.target.value)}
+                    className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 min-w-0"
+                  >
+                    <option value="7d">Last 7 days</option>
+                    <option value="30d">Last 30 days</option>
+                    <option value="90d">Last 90 days</option>
+                    <option value="custom">Custom Range</option>
+                  </select>
+                </div>
               </div>
 
               {/* View Type Toggle */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 flex-shrink-0">
                 <span className="text-sm text-gray-600">View:</span>
                 <div className="flex space-x-1 bg-gray-100 rounded-lg p-1">
                   <button
                     onClick={() => setViewType('table')}
-                    className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                    className={`px-3 py-1 text-sm rounded-md transition-colors duration-200 ${
                       viewType === 'table'
                         ? 'bg-white text-gray-900 shadow-sm'
                         : 'text-gray-600 hover:text-gray-900'
@@ -343,7 +357,7 @@ const CampaignsPage = () => {
                   </button>
                   <button
                     onClick={() => setViewType('cards')}
-                    className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                    className={`px-3 py-1 text-sm rounded-md transition-colors duration-200 ${
                       viewType === 'cards'
                         ? 'bg-white text-gray-900 shadow-sm'
                         : 'text-gray-600 hover:text-gray-900'
@@ -353,7 +367,7 @@ const CampaignsPage = () => {
                   </button>
                   <button
                     onClick={() => setViewType('analytics')}
-                    className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                    className={`px-3 py-1 text-sm rounded-md transition-colors duration-200 ${
                       viewType === 'analytics'
                         ? 'bg-white text-gray-900 shadow-sm'
                         : 'text-gray-600 hover:text-gray-900'
